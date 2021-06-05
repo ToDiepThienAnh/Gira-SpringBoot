@@ -25,6 +25,9 @@ public class SwaggerConfig {
 	
 	private ApiInfo getApiInfo() {
 		return new ApiInfoBuilder()
+			.title("Gira Application")
+			.description("Gira for education purpose.")
+			.contact(new Contact("Tô Diệp Thiên Anh", "todiepthienanh@gmail.com", "thienanh.dev"))
 			.title("Gira Project")
 			.description("Gira for education purpose.")
 			.contact(new Contact("To Diep Thien Anh", "todiepthienanh@gmail.com", "thienanh.dev"))
