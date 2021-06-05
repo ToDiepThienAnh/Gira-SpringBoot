@@ -17,7 +17,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "role")
+@Table( name = "role")
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -67,4 +67,29 @@ public class Role {
 		// TODO Auto-generated method stub
 		return String.format("ROLE: %d %s %s", id, roleName, description);
 	}
+	private String roleDescription;
+	
+	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+	Set<Account> accounts;
+	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+	public String getRoleDescription() {
+		return roleDescription;
+	}
+	public void setRoleDescription(String roleDescription) {
+		this.roleDescription = roleDescription;
+	}
+	
 }

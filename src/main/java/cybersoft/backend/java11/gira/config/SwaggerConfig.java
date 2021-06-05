@@ -14,7 +14,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-	
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -29,6 +28,9 @@ public class SwaggerConfig {
 			.title("Gira Application")
 			.description("Gira for education purpose.")
 			.contact(new Contact("Tô Diệp Thiên Anh", "todiepthienanh@gmail.com", "thienanh.dev"))
+			.title("Gira Project")
+			.description("Gira for education purpose.")
+			.contact(new Contact("To Diep Thien Anh", "todiepthienanh@gmail.com", "thienanh.dev"))
 			.license("MIT2")
 			.build();
 	}

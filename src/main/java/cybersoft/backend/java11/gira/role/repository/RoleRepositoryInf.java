@@ -16,4 +16,5 @@ public interface RoleRepositoryInf extends JpaRepository<Role, Long>{
 	
 	@Query("SELECT r FROM Role r WHERE r.roleName=:roleName AND r.description IS NOT NULL")
 	List<Role> findRoleWithNotNullDescription(@Param("roleName")String roleName);
+
 }
