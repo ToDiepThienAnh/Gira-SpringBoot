@@ -49,27 +49,28 @@ public class RoleService implements RoleServiceInf {
 
 	@Override
 	public List<RoleWithAccountsDTO> findRoleWithAccountInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Role> roles = _repository.findAll();
+		List<RoleWithAccountsDTO> results = mapRoleToRoleWithAccountsDTO(roles);
+		return results;
 	}
-
-//	private List<RoleWithAccountsDTO> mapRoleToRoleWithAccountsDTO(List<Role> roles){
-//		List<RoleWithAccountsDTO> results = new LinkedList<RoleWithAccountsDTO>();
-//		
-//		for (Role role : roles) {
-//			RoleWithAccountsDTO dto = new RoleWithAccountsDTO();
-//			mapRoleToDto(dto, role);
-//			results.add(dto);
-//		}
-//		
-//		return results;
-//	}
-//	
-//	private void mapRoleToDto(RoleWithAccountsDTO dto, Role role) {
-//		dto.setId(role.getId());
-//		dto.setRoleName(role.getRoleName());
-//		dto.setDescription(role.getDescription());
-//		dto.setAccounts(role.getAccounts());
-//	}
+	
+	private List<RoleWithAccountsDTO> mapRoleToRoleWithAccountsDTO(List<Role> roles){
+		List<RoleWithAccountsDTO> results = new LinkedList<RoleWithAccountsDTO>();
+		
+		for (Role role : roles) {
+			RoleWithAccountsDTO dto = new RoleWithAccountsDTO();
+			mapRoleToDto(dto, role);
+			results.add(dto);
+		}
+		
+		return results;
+	}
+	
+	private void mapRoleToDto(RoleWithAccountsDTO dto, Role role) {
+		dto.setId(role.getId());
+		dto.setRoleName(role.getRoleName());
+		dto.setDescription(role.getDescription());
+		dto.setAccounts(role.getAccounts());
+	}
 
 }

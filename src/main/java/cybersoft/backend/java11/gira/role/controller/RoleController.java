@@ -34,15 +34,15 @@ public class RoleController {
 		return new ResponseEntity<>(roles, HttpStatus.OK);
 	}
 	
-//	@GetMapping("with-accounts")
-//	public ResponseEntity<RoleWithAccountsDTO> findRoleWithAccounts(){
-//		List<Role> roles = _service.findRoleWithAccountsInfo();
-//		
-//		if(roles == null ) {
-//			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//		}
-//		return new ResponseEntity<>(roles, HttpStatus.OK);
-//	}
+	@GetMapping("/with-account")
+	public ResponseEntity<List<RoleWithAccountsDTO>> findRoleWithAccountInfo(){
+		List<RoleWithAccountsDTO> roles = _service.findRoleWithAccountInfo();
+		
+		if(roles.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		
+		return new ResponseEntity<>(roles, HttpStatus.OK);
+	}
 	
 	@GetMapping("/description/{role-name}")
 	public ResponseEntity<Object> findRoleWithoutBlankDescription(@PathVariable("role-name") String roleName){

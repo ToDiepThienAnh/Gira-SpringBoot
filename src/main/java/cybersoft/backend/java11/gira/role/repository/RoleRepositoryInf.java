@@ -11,7 +11,6 @@ import cybersoft.backend.java11.gira.role.model.Role;
 
 @Repository
 public interface RoleRepositoryInf extends JpaRepository<Role, Long>{
-//	void save(Role role);
 	List<Role> findByRoleName(String roleName);
 	List<Role> findByDescriptionContainingOrderByIdAsc(String description);
 	
