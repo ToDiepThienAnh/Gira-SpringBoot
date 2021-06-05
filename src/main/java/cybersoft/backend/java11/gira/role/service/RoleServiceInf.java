@@ -9,6 +9,7 @@ public interface RoleServiceInf {
 	void save(Role role);
 	List<Role> findAll();
 	List<Role> findByRoleName(String roleName);
-	List<Role> findByDescriptionContainingAndOrderByIdAsc(String description);
-	List<RoleWithAccountsDTO> findRoleWithAccountsInfo();
+	List<Role> findByDescription(String description);
+	List<Role> findRoleWithoutBlankDescription(String roleName);
+	List<RoleWithAccountsDTO> findRoleWithAccountInfo();
 }

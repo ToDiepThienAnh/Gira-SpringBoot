@@ -1,6 +1,7 @@
 package cybersoft.backend.java11.gira.role.service;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,18 +36,40 @@ public class RoleService implements RoleServiceInf {
 	}
 
 	@Override
-	public List<Role> findByDescriptionContainingAndOrderByIdAsc(String description) {
+	public List<Role> findByDescription(String description) {
 		// TODO Auto-generated method stub
 		return _repository.findByDescriptionContainingOrderByIdAsc(description);
 	}
 
 	@Override
-	public List<RoleWithAccountsDTO> findRoleWithAccountsInfo() {
+	public List<Role> findRoleWithoutBlankDescription(String roleName) {
 		// TODO Auto-generated method stub
-		List<Role> roles = _repository.findAll();
-		
-		System.out.println("Holding to debug");
+		return _repository.findRoleWithNotNullDescription(roleName);
+	}
+
+	@Override
+	public List<RoleWithAccountsDTO> findRoleWithAccountInfo() {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+//	private List<RoleWithAccountsDTO> mapRoleToRoleWithAccountsDTO(List<Role> roles){
+//		List<RoleWithAccountsDTO> results = new LinkedList<RoleWithAccountsDTO>();
+//		
+//		for (Role role : roles) {
+//			RoleWithAccountsDTO dto = new RoleWithAccountsDTO();
+//			mapRoleToDto(dto, role);
+//			results.add(dto);
+//		}
+//		
+//		return results;
+//	}
+//	
+//	private void mapRoleToDto(RoleWithAccountsDTO dto, Role role) {
+//		dto.setId(role.getId());
+//		dto.setRoleName(role.getRoleName());
+//		dto.setDescription(role.getDescription());
+//		dto.setAccounts(role.getAccounts());
+//	}
 
 }

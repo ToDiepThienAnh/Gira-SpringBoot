@@ -27,29 +27,41 @@ public class Role {
 	private String description;
 	
 	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-//	@JsonIgnore
+	@JsonIgnore
 	Set<Account> accounts;
 	
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getRoleName() {
 		return roleName;
 	}
+
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
+
+	public Set<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts = accounts;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

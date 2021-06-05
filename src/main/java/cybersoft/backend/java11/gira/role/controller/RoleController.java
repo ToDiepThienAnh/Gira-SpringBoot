@@ -16,18 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 import cybersoft.backend.java11.gira.role.dto.RoleWithAccountsDTO;
 import cybersoft.backend.java11.gira.role.model.Role;
 import cybersoft.backend.java11.gira.role.service.RoleService;
+import cybersoft.backend.java11.gira.role.service.RoleServiceInf;
 
 @RestController
 @RequestMapping("/api/role")
 public class RoleController {
 	@Autowired
-	private RoleService _service;
+	private RoleServiceInf _service;
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAll(){
-		List<RoleWithAccountsDTO> roles = _service.findRoleWithAccountsInfo();
+		List<Role> roles = _service.findAll();
 		
-		if(roles == null ) {
+		if(roles.isEmpty() ) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<>(roles, HttpStatus.OK);
@@ -43,6 +44,16 @@ public class RoleController {
 //		return new ResponseEntity<>(roles, HttpStatus.OK);
 //	}
 	
+	@GetMapping("/description/{role-name}")
+	public ResponseEntity<Object> findRoleWithoutBlankDescription(@PathVariable("role-name") String roleName){
+		List<Role> roles = _service.findRoleWithoutBlankDescription(roleName);
+		
+		if(roles.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		
+		return new ResponseEntity<>(roles, HttpStatus.OK);
+	}
+	
 	@GetMapping("/{role-name}")
 	public ResponseEntity<Object> findByRoleName(@PathVariable("role-name") String roleName){
 		List<Role> roles = _service.findByRoleName(roleName);
@@ -53,14 +64,14 @@ public class RoleController {
 		return new ResponseEntity<>(roles, HttpStatus.OK);
 	}
 	
-	@GetMapping("/description/{description}")
-	public ResponseEntity<Object> findByDescriptionContainingAndOrderByIdAsc(@PathVariable("description") String description){
-		List<Role> roles = _service.findByDescriptionContainingAndOrderByIdAsc(description);
+	@GetMapping("/description")
+	public ResponseEntity<Object> findByDescription(@RequestParam("description") String description){
+		List<Role> roles = _service.findByDescription(description);
 		
-		if(roles == null ) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<>(roles, HttpStatus.OK);
+		if(roles.isEmpty())
+			return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
+		
+		return new ResponseEntity<Object>(roles, HttpStatus.OK);
 	}
 	
 	@PostMapping("")
