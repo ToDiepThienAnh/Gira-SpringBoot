@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cybersoft.backend.java11.gira.role.dto.CreateRoleDTO;
 import cybersoft.backend.java11.gira.role.dto.RoleWithAccountsDTO;
 import cybersoft.backend.java11.gira.role.model.Role;
 import cybersoft.backend.java11.gira.role.service.RoleService;
@@ -77,12 +78,10 @@ public class RoleController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<Object> save(@RequestBody Role role){
-		Role roleAdd = role;
+	public ResponseEntity<Object> save(@RequestBody CreateRoleDTO dto){
+		Role roleAdd = new Role();
+		roleAdd.roleName(dto.roleName).description(dto.description);
 		_service.save(roleAdd);
-		if( roleAdd == null) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
 		return new ResponseEntity<>(roleAdd, HttpStatus.CREATED);
 	}
 }

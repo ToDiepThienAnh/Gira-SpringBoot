@@ -1,9 +1,11 @@
 package cybersoft.backend.java11.gira.role.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -30,6 +32,29 @@ public class Role extends AbstractEntity {
 	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
 	@JsonIgnore
 	Set<Account> accounts;
+	
+
+	@ManyToMany(mappedBy = "roles")
+	@JsonIgnore
+	private Set<RoleGroup> groups = new HashSet<>();
+	
+	
+	public Set<RoleGroup> getGroups() {
+		return groups;
+	}
+	
+	public void setGroups(Set<RoleGroup> groups) {
+		this.groups = groups;
+	}
+	public Role roleName(String roleName) {
+		this.roleName = roleName;
+		return this;
+	}
+	
+	public Role description(String description) {
+		this.description = description;
+		return this;
+	}
 	
 	public String getRoleName() {
 		return roleName;
