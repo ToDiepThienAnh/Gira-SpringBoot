@@ -13,7 +13,6 @@ public class RoleWithAccountsDTO {
 	private Set<Account> accounts;
 	
 	
-	
 	public long getId() {
 		return id;
 	}

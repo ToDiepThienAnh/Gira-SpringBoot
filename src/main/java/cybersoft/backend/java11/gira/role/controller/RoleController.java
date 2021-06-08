@@ -2,9 +2,12 @@ package cybersoft.backend.java11.gira.role.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cybersoft.backend.java11.gira.role.dto.CreateRoleDTO;
 import cybersoft.backend.java11.gira.role.dto.RoleWithAccountsDTO;
 import cybersoft.backend.java11.gira.role.model.Role;
 import cybersoft.backend.java11.gira.role.service.RoleServiceInf;
@@ -74,14 +78,22 @@ public class RoleController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<Object> save(@RequestBody Role role){
-		try {
-			System.out.println(role);
-			_service.save(role);
-			return new ResponseEntity<>(HttpStatus.CREATED);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<Object> save(@Valid @RequestBody CreateRoleDTO dto, BindingResult error){
+		if(error.hasErrors()) 
+			return new ResponseEntity<>(error.getAllErrors(), HttpStatus.BAD_REQUEST);
+		
+		Role role = new Role()
+							.roleName(dto.roleName)
+							.description(dto.description);
+		_service.save(role);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+//		try {
+//			System.out.println(role);
+//			_service.save(role);
+//			return new ResponseEntity<>(HttpStatus.CREATED);
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
 	}
 }
