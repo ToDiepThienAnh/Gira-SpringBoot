@@ -12,4 +12,11 @@ public interface RoleServiceInf {
 //	List<Role> findByDescription(String description);
 //	List<Role> findRoleWithoutBlankDescription(String roleName);
 //	List<RoleWithAccountsDTO> findRoleWithAccountInfo();
+	
+	List<Role> findAll();
+	List<RoleWithAccountsDTO> findAllWithAccount();
+	void save(Role role);
+	List<Role> findByRoleName(String roleName);
+	List<Role> findByDescriptionContainingOrderByIdAsc(String description);
+	List<Role> findRoleNameWidthDescriptionNotBlank(String roleName);
 }
