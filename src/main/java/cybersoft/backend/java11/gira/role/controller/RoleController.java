@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import cybersoft.backend.java11.gira.role.dto.CreateRoleDTO;
 import cybersoft.backend.java11.gira.role.dto.RoleWithAccountsDTO;
 import cybersoft.backend.java11.gira.role.model.Role;
-import cybersoft.backend.java11.gira.role.service.RoleService;
 import cybersoft.backend.java11.gira.role.service.RoleServiceInf;
 
 @RestController

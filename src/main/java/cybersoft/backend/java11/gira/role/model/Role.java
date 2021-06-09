@@ -85,6 +85,5 @@ public class Role extends AbstractEntity {
 		// TODO Auto-generated method stub
 		return String.format("ROLE: %d %s %s", id, roleName, description);
 	}
-	
-	
+
 }
