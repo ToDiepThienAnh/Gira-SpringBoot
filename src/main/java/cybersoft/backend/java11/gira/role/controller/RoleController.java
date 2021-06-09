@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cybersoft.backend.java11.gira.role.dto.CreateRoleDTO;
 import cybersoft.backend.java11.gira.role.dto.RoleWithAccountsDTO;
 import cybersoft.backend.java11.gira.role.model.Role;
 import cybersoft.backend.java11.gira.role.service.RoleServiceInf;
@@ -25,63 +26,61 @@ public class RoleController {
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAll(){
-		List<Role> roles = _service.findAll();
+		List<Role> listRole = _service.findAll();
 		
-		if(roles.isEmpty() ) {
+		if(listRole.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<>(roles, HttpStatus.OK);
-	}
-	
-	@GetMapping("/with-account")
-	public ResponseEntity<List<RoleWithAccountsDTO>> findRoleWithAccountInfo(){
-		List<RoleWithAccountsDTO> roles = _service.findRoleWithAccountInfo();
-		
-		if(roles.isEmpty())
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		
-		return new ResponseEntity<>(roles, HttpStatus.OK);
-	}
-	
-	@GetMapping("/description/{role-name}")
-	public ResponseEntity<Object> findRoleWithoutBlankDescription(@PathVariable("role-name") String roleName){
-		List<Role> roles = _service.findRoleWithoutBlankDescription(roleName);
-		
-		if(roles.isEmpty())
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		
-		return new ResponseEntity<>(roles, HttpStatus.OK);
+		} 
+		return new ResponseEntity<>(listRole, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{role-name}")
 	public ResponseEntity<Object> findByRoleName(@PathVariable("role-name") String roleName){
-		List<Role> roles = _service.findByRoleName(roleName);
+		List<Role> listRole = _service.findByRoleName(roleName);
 		
-		if(roles == null ) {
+		if(listRole.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<>(roles, HttpStatus.OK);
+		} 
+		return new ResponseEntity<>(listRole, HttpStatus.OK);
 	}
 	
 	@GetMapping("/description")
-	public ResponseEntity<Object> findByDescription(@RequestParam("description") String description){
-		List<Role> roles = _service.findByDescription(description);
+	public ResponseEntity<Object> findByDescriptionContainingOrderByIdAsc(@RequestParam("description")
+					String description
+			){
+		List<Role> listRole = _service.findByDescriptionContainingOrderByIdAsc(description);
 		
-		if(roles.isEmpty())
-			return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
+		if(listRole.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		
-		return new ResponseEntity<Object>(roles, HttpStatus.OK);
+		return new ResponseEntity<>(listRole, HttpStatus.OK);
+	}
+	
+	@GetMapping("/description/{role-name}")
+	public ResponseEntity<Object> findRoleNameWidthDescriptionNotBlank(@PathVariable("role-name") String roleName){
+		List<Role> listRole = _service.findRoleNameWidthDescriptionNotBlank(roleName);
+		
+		if(listRole.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		
+		return new ResponseEntity<>(listRole, HttpStatus.OK);
+	}
+	
+	@GetMapping("/with-account")
+	public ResponseEntity<Object> findAllWithAccount(){
+		List<RoleWithAccountsDTO> list = _service.findAllWithAccount();
+		
+		if(list.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<Object> save(@RequestBody Role role){
-		try {
-			System.out.println(role);
-			_service.save(role);
-			return new ResponseEntity<>(HttpStatus.CREATED);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<Object> save(@RequestBody CreateRoleDTO dto){
+		Role roleAdd = new Role();
+		roleAdd.roleName(dto.roleName).description(dto.description);
+		_service.save(roleAdd);
+		return new ResponseEntity<>(roleAdd, HttpStatus.CREATED);
 	}
 }
