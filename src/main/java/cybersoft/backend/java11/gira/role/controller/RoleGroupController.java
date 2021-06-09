@@ -42,9 +42,12 @@ public class RoleGroupController {
 		if(errors.hasErrors())
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		
-		RoleGroup group = new RoleGroup()
-				.name(dto.groupName)
-				.description(dto.description);
+//		RoleGroup group = new RoleGroup()
+//				.name(dto.groupName)
+//				.description(dto.description);
+		RoleGroup group = new RoleGroup();
+		group.setGroupName(dto.groupName);
+		group.setDescription(dto.description);
 		
 		_service.save(group);
 		return new ResponseEntity<>(group, HttpStatus.OK);
