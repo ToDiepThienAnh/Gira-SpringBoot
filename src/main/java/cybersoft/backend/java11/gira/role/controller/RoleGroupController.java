@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cybersoft.backend.java11.gira.commondata.ResponseObject;
 import cybersoft.backend.java11.gira.role.dto.CreateRoleGroupDTO;
 import cybersoft.backend.java11.gira.role.model.Role;
 import cybersoft.backend.java11.gira.role.model.RoleGroup;
 import cybersoft.backend.java11.gira.role.service.RoleGroupServiceInf;
+import cybersoft.backend.java11.gira.utils.ErrorUtils;
 
 @RestController
 @RequestMapping("/api/role-group")
@@ -78,6 +81,34 @@ public class RoleGroupController {
 			updatedGroup = _service.addRole(role, groupId);
 		}
 		return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/{group-id}")
+	public ResponseEntity<Object> deleteById(@PathVariable("group-id") Long id){
+		if(id == null)
+			return new ResponseEntity<>(
+					new ResponseObject(ErrorUtils.errorOf("id is null")), HttpStatus.BAD_REQUEST);
+					
+		_service.deleteById(id);
+		return new ResponseEntity<>(
+				new ResponseObject("Role Group has been deleted"), HttpStatus.OK);
+	}
+	@PutMapping("/{group-id}/remove-role")
+	public ResponseEntity<Object> removeRole(@Valid
+			@RequestBody Role role,
+			@PathVariable("group-id") Long id,
+			BindingResult errors){
+		if( errors.hasErrors())
+			return new ResponseEntity<>(
+					new ResponseObject(ErrorUtils.getErrorMessages(errors.getAllErrors())), HttpStatus.BAD_REQUEST);
+		if(id == null) {
+			return new ResponseEntity<>(
+					new ResponseObject(ErrorUtils.errorOf("id is null")), HttpStatus.BAD_REQUEST);
+		}
+		
+		RoleGroup group = _service.removeRole(role, id);
+		
+		return new ResponseEntity<>(new ResponseObject(group), HttpStatus.OK);
 	}
 }
 
