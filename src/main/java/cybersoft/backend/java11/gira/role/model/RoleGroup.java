@@ -46,6 +46,12 @@ public class RoleGroup extends AbstractEntity {
 		return this;
 	}
 	
+	public RoleGroup removeRole(Role role) {
+		this.roles.remove(role);
+		role.getGroups().remove(this);
+		return this;
+	}
+	
 	public RoleGroup name(String name) {
 		this.groupName = name;
 		return this;

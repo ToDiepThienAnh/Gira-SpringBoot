@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cybersoft.backend.java11.gira.role.dto.CreateRoleDTO;
 import cybersoft.backend.java11.gira.role.dto.RoleWithAccountsDTO;
 import cybersoft.backend.java11.gira.role.model.Role;
 import cybersoft.backend.java11.gira.role.repository.RoleRepositoryInf;
@@ -68,6 +69,22 @@ public class RoleService implements RoleServiceInf {
 		dto.setRoleName(role.getRoleName());
 		dto.setDescription(role.getDescription());
 		dto.setAccounts(role.getAccounts());
+	}
+
+	@Override
+	public Role updateRoleInfo(CreateRoleDTO dto, Long roleId) {
+		// TODO Auto-generated method stub
+		Role role = _repository.getOne(roleId);
+		role.roleName(dto.roleName)
+			.description(dto.description);
+		
+		return _repository.save(role);
+	}
+
+	@Override
+	public void deleteById(Long roleId) {
+		// TODO Auto-generated method stub
+		_repository.deleteById(roleId);
 	}
 	
 //	@Override
