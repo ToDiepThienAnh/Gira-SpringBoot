@@ -41,8 +41,19 @@ public class RoleGroup extends AbstractEntity {
 	 * 
 	 */
 	public RoleGroup addRole(Role role) {
+		System.out.println("Role " + role);
+		System.out.println("listRole 1" + roles);
+		System.out.println("listRole GetGroups() 1" + role.getGroups());
 		this.roles.add(role);
+		System.out.println("listRole" + roles);
 		role.getGroups().add(this);
+		System.out.println("listRole GetGroups()" + role.getGroups());
+		return this;
+	}
+	
+	public RoleGroup removeRole(Role role) {
+		this.roles.remove(role);
+		System.out.println("listRole Remove" + this.roles);
 		return this;
 	}
 	
@@ -67,6 +78,7 @@ public class RoleGroup extends AbstractEntity {
 	public String getDescription() {
 		return description;
 	}
+	
 
 	public void setDescription(String description) {
 		this.description = description;

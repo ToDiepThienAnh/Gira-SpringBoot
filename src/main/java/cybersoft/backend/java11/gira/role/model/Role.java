@@ -38,14 +38,6 @@ public class Role extends AbstractEntity {
 	@JsonIgnore
 	private Set<RoleGroup> groups = new HashSet<>();
 	
-	
-	public Set<RoleGroup> getGroups() {
-		return groups;
-	}
-	
-	public void setGroups(Set<RoleGroup> groups) {
-		this.groups = groups;
-	}
 	public Role roleName(String roleName) {
 		this.roleName = roleName;
 		return this;
@@ -54,6 +46,14 @@ public class Role extends AbstractEntity {
 	public Role description(String description) {
 		this.description = description;
 		return this;
+	}
+	
+	public Set<RoleGroup> getGroups() {
+		return groups;
+	}
+	
+	public void setGroups(Set<RoleGroup> groups) {
+		this.groups = groups;
 	}
 	
 	public String getRoleName() {

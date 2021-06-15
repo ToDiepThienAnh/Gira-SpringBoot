@@ -28,10 +28,6 @@ public class RoleGroupService implements RoleGroupServiceInf {
 		_repository.save(entity);
 	}
 
-	@Override
-	public RoleGroup update(RoleGroup entity) {
-		return _repository.save(entity);
-	}
 
 	@Override
 	public void deleteById(Long id) {
@@ -50,6 +46,21 @@ public class RoleGroupService implements RoleGroupServiceInf {
 		// TODO Auto-generated method stub
 		RoleGroup group = _repository.getOne(id);
 		group.addRole(role);
+		
+		return _repository.save(group);
+	}
+
+	@Override
+	public RoleGroup update(RoleGroup entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public RoleGroup removeRole(Role role, long id) {
+		RoleGroup group = _repository.getOne(id);
+		group.removeRole(role);
+		
 		
 		return _repository.save(group);
 	}
