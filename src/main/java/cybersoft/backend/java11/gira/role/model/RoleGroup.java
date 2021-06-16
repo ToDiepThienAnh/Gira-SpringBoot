@@ -41,19 +41,22 @@ public class RoleGroup extends AbstractEntity {
 	 * 
 	 */
 	public RoleGroup addRole(Role role) {
-		System.out.println("Role " + role);
-		System.out.println("listRole 1" + roles);
-		System.out.println("listRole GetGroups() 1" + role.getGroups());
 		this.roles.add(role);
-		System.out.println("listRole" + roles);
 		role.getGroups().add(this);
-		System.out.println("listRole GetGroups()" + role.getGroups());
 		return this;
 	}
 	
 	public RoleGroup removeRole(Role role) {
-		this.roles.remove(role);
-		System.out.println("listRole Remove" + this.roles);
+		System.out.println("Role Group: " + this.getRoles());
+		System.out.println("Role: " + role);
+		System.out.println("listRole before: " + roles);
+		try {
+			this.roles.remove(role);
+			role.getGroups().remove(this);
+			System.out.println("listRole Remove: " + this.roles);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
@@ -92,6 +95,16 @@ public class RoleGroup extends AbstractEntity {
 		this.roles = roles;
 	}
 	
-	
+	 @Override
+	    public boolean equals(Object o) {
+	        if (this == o) return true;
+	        if (!(o instanceof RoleGroup)) return false;
+	        return id != null && id.equals(((RoleGroup) o).getId());
+	    }
+	 
+	    @Override
+	    public int hashCode() {
+	        return getClass().hashCode();
+	    }
 	
 }

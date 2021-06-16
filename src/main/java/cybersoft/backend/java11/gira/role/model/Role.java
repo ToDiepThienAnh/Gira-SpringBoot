@@ -1,6 +1,7 @@
 package cybersoft.backend.java11.gira.role.model;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table( name = "role")
-public class Role extends AbstractEntity {
+public class Role extends AbstractEntity{
 	
 	@NotBlank(message = "Role name can't be blank.")
 	@Length(min = 4, max = 50, message = "Role name length is between {0} and {1}.")
@@ -85,5 +86,17 @@ public class Role extends AbstractEntity {
 		// TODO Auto-generated method stub
 		return String.format("ROLE: %d %s %s", id, roleName, description);
 	}
-
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role tag = (Role) o;
+        return Objects.equals(roleName, tag.roleName);
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(roleName);
+    }
 }
