@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cybersoft.backend.java11.gira.commondata.ResponseHandler;
 import cybersoft.backend.java11.gira.commondata.ResponseObject;
 import cybersoft.backend.java11.gira.role.dto.CreateRoleGroupDTO;
 import cybersoft.backend.java11.gira.role.model.Role;
@@ -99,11 +100,9 @@ public class RoleGroupController {
 			@PathVariable("group-id") Long id,
 			BindingResult errors){
 		if( errors.hasErrors())
-			return new ResponseEntity<>(
-					new ResponseObject(ErrorUtils.getErrorMessages(errors.getAllErrors())), HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		if(id == null) {
-			return new ResponseEntity<>(
-					new ResponseObject(ErrorUtils.errorOf("id is null")), HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse("id is null", HttpStatus.BAD_REQUEST);
 		}
 		
 		RoleGroup group = _service.removeRole(role, id);

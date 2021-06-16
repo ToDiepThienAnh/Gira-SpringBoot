@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cybersoft.backend.java11.gira.commondata.ResponseHandler;
 import cybersoft.backend.java11.gira.commondata.ResponseObject;
 import cybersoft.backend.java11.gira.role.dto.CreateRoleDTO;
 import cybersoft.backend.java11.gira.role.dto.RoleWithAccountsDTO;
@@ -36,9 +37,9 @@ public class RoleController {
 		List<Role> listRole = _service.findAll();
 		
 		if(listRole.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return ResponseHandler.getResponse("No Content.", HttpStatus.NO_CONTENT);
 		} 
-		return new ResponseEntity<>(listRole, HttpStatus.OK);
+		return ResponseHandler.getResponse(listRole, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{role-name}")
@@ -46,9 +47,9 @@ public class RoleController {
 		List<Role> listRole = _service.findByRoleName(roleName);
 		
 		if(listRole.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return ResponseHandler.getResponse("No Content.", HttpStatus.NO_CONTENT);
 		} 
-		return new ResponseEntity<>(listRole, HttpStatus.OK);
+		return ResponseHandler.getResponse(listRole, HttpStatus.OK);
 	}
 	
 	@GetMapping("/description")
@@ -58,9 +59,9 @@ public class RoleController {
 		List<Role> listRole = _service.findByDescriptionContainingOrderByIdAsc(description);
 		
 		if(listRole.isEmpty())
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return ResponseHandler.getResponse("No Content.", HttpStatus.NO_CONTENT);
 		
-		return new ResponseEntity<>(listRole, HttpStatus.OK);
+		return ResponseHandler.getResponse(listRole, HttpStatus.OK);
 	}
 	
 	@GetMapping("/description/{role-name}")
@@ -68,9 +69,9 @@ public class RoleController {
 		List<Role> listRole = _service.findRoleNameWidthDescriptionNotBlank(roleName);
 		
 		if(listRole.isEmpty())
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return ResponseHandler.getResponse("No Content.", HttpStatus.NO_CONTENT);
 		
-		return new ResponseEntity<>(listRole, HttpStatus.OK);
+		return ResponseHandler.getResponse(listRole, HttpStatus.OK);
 	}
 	
 	@GetMapping("/with-account")
@@ -78,21 +79,21 @@ public class RoleController {
 		List<RoleWithAccountsDTO> list = _service.findAllWithAccount();
 		
 		if(list.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return ResponseHandler.getResponse("No Content.", HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<>(list, HttpStatus.OK);
+		return ResponseHandler.getResponse(list, HttpStatus.OK);
 	}
 	
 	@PostMapping("")
 	public ResponseEntity<Object> save(@Valid @RequestBody CreateRoleDTO dto,
 			BindingResult errors){
 		if(errors.hasErrors())
-			return new ResponseEntity<>(errors.getAllErrors(), HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
 		Role roleAdd = new Role();
 		roleAdd.roleName(dto.roleName).description(dto.description);
 		_service.save(roleAdd);
-		return new ResponseEntity<>(roleAdd, HttpStatus.CREATED);
+		return ResponseHandler.getResponse(roleAdd, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{role-id}")
@@ -101,22 +102,17 @@ public class RoleController {
 			@PathVariable("role-id") Long roleId,
 			BindingResult errors){
 		if(errors.hasErrors())
-			return new ResponseEntity<>(
-					new ResponseObject(ErrorUtils.getErrorMessages(errors.getAllErrors())),
-					HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
 		Role updatedRole = _service.updateRoleInfo(dto, roleId);
 		
-		return new ResponseEntity<>(
-				new ResponseObject(updatedRole), HttpStatus.OK);
+		return ResponseHandler.getResponse(updatedRole, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{role-id}")
 	public ResponseEntity<Object> deleteRoleById(@PathVariable("role-id")Long roleId){
 		if(roleId == null)
-			return new ResponseEntity<>(
-			new ResponseObject(ErrorUtils.errorOf("Role id is null")),
-			HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse("id is null", HttpStatus.BAD_REQUEST);
 		
 		_service.deleteById(roleId);
 		return new ResponseEntity<>(
