@@ -8,4 +8,5 @@ import cybersoft.backend.java11.gira.user.model.User;
 public interface UserService extends GenericService<User, Long> {
 	public User save(CreateUserDTO dto);
 	public boolean isTakenUsername(String username);
+	public boolean isTakenEmail(String email);
 }

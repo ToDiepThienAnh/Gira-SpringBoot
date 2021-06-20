@@ -37,4 +37,10 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 		// TODO Auto-generated method stub
 		return _repository.countByUsername(username) >= 1;
 	}
+
+	@Override
+	public boolean isTakenEmail(String email) {
+		// TODO Auto-generated method stub
+		return _repository.countByEmail(email) >= 1;
+	}
 }

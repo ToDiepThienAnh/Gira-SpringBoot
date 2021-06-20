@@ -6,12 +6,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import cybersoft.backend.java11.gira.user.utils.UserStatus;
+import cybersoft.backend.java11.gira.user.validation.annotation.ConfirmPassword;
 import cybersoft.backend.java11.gira.user.validation.annotation.UniqueUserName;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@ConfirmPassword(message = "{user.confirm-password}")
 public class CreateUserDTO {
 	@NotBlank(message = "aa")
 	@Size(min = 3, max = 50, message = "aa")
