@@ -1,5 +1,11 @@
 package cybersoft.backend.java11.gira.user.repository;
 
-public class UserRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import cybersoft.backend.java11.gira.user.model.User;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+	
 }

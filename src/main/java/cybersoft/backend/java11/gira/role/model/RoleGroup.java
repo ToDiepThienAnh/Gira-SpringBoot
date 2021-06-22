@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 import cybersoft.backend.java11.gira.commondata.AbstractEntity;
+import cybersoft.backend.java11.gira.user.model.User;
 
 @Entity
 public class RoleGroup extends AbstractEntity {
@@ -34,6 +35,12 @@ public class RoleGroup extends AbstractEntity {
 				joinColumns = @JoinColumn(name = "group_id"),
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
+	
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinTable(name = "gira_role-group_user_link", 
+				joinColumns = @JoinColumn(name = "group_id"),
+				inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<User> users = new HashSet<>();
 	
 	/*
 	 * Helper methods
@@ -95,7 +102,16 @@ public class RoleGroup extends AbstractEntity {
 		this.roles = roles;
 	}
 	
-	 @Override
+	
+	 public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	@Override
 	    public boolean equals(Object o) {
 	        if (this == o) return true;
 	        if (!(o instanceof RoleGroup)) return false;
