@@ -2,6 +2,7 @@ package cybersoft.backend.java11.gira.user.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import cybersoft.backend.java11.gira.commondata.GenericServiceImpl;
@@ -15,12 +16,15 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 	@Autowired
 	private UserRepository _repository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Override
 	public User save(CreateUserDTO dto) {
 		// TODO Auto-generated method stub
 		System.out.println("Run in CreateUserDTO");
 		User user = new User().username(dto.getUsername())
-				.password(dto.getPassword())
+				.password(passwordEncoder.encode(dto.getPassword()))
 				.displayName(dto.getDisplayName())
 				.status(dto.getStatus())
 				.fullname(dto.getFullName())
@@ -32,5 +36,11 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 	public boolean isTakenUsername(String username) {
 		// TODO Auto-generated method stub
 		return _repository.countByUsername(username) >= 1;
+	}
+
+	@Override
+	public boolean isTakenEmail(String email) {
+		// TODO Auto-generated method stub
+		return _repository.countByEmail(email) >= 1;
 	}
 }

@@ -84,6 +84,7 @@ public class RoleGroupController {
 		return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
 	}
 	
+	
 	@DeleteMapping("/{group-id}")
 	public ResponseEntity<Object> deleteById(@PathVariable("group-id") Long id){
 		if(id == null)
