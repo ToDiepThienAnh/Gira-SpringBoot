@@ -1,0 +1,4 @@
+create databse gira;
+
+use gira;
+

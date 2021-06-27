@@ -2,36 +2,37 @@ package cybersoft.backend.java11.gira.project.model;
 
 import java.util.Set;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import cybersoft.backend.java11.gira.commondata.AbstractEntity;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "gira_workflow")
+@Table(name = "gira_project_workflow")
 public class Workflow extends AbstractEntity {
+	@NotBlank(message = "{workflow.name.not-blank}")
+	@Size(min = 3, max = 100, message = "{workflow.name.size}")
 	private String name;
+	
 	private String description;
 	
-	@Column(name = "project_id")
-	private Long projectId;
-	
-	@ManyToOne()
-	@JoinColumn(name = "project_id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Project project;
 	
-	@OneToMany(mappedBy = "workflow", fetch = FetchType.LAZY)
-	@JsonIgnore
+	@OneToMany(mappedBy = "workflow", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<WorkflowNode> nodes;
 	
-	@OneToMany(mappedBy = "workflow", fetch = FetchType.LAZY)
-	@JsonIgnore
+	@OneToMany(mappedBy = "workflow", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<WorkflowLink> links;
+	
 }
