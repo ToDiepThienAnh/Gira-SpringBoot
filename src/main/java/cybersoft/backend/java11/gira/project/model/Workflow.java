@@ -1,5 +1,6 @@
 package cybersoft.backend.java11.gira.project.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -30,9 +31,9 @@ public class Workflow extends AbstractEntity {
 	private Project project;
 	
 	@OneToMany(mappedBy = "workflow", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<WorkflowNode> nodes;
+	private Set<WorkflowNode> nodes = new HashSet<WorkflowNode>();
 	
 	@OneToMany(mappedBy = "workflow", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<WorkflowLink> links;
+	private Set<WorkflowLink> links = new HashSet<WorkflowLink>();
 	
 }

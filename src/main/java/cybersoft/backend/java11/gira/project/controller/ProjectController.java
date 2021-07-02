@@ -20,12 +20,15 @@ import cybersoft.backend.java11.gira.commondata.ResponseHandler;
 import cybersoft.backend.java11.gira.project.dto.CreateProjectDto;
 import cybersoft.backend.java11.gira.project.model.Project;
 import cybersoft.backend.java11.gira.project.service.ProjectService;
+import cybersoft.backend.java11.gira.utils.MapDtoToModel;
 
 @RestController
 @RequestMapping("/api/project")
 public class ProjectController {
 	@Autowired
 	private ProjectService service;
+	@Autowired
+	private MapDtoToModel<Object, Object> mapper;
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAllProjects(){
@@ -42,6 +45,7 @@ public class ProjectController {
 			return ResponseHandler.getResponse(bindingResult, HttpStatus.BAD_REQUEST);
 		
 		Project project = service.save(dto);
+		
 		return ResponseHandler.getResponse(project, HttpStatus.OK);
 	}
 	

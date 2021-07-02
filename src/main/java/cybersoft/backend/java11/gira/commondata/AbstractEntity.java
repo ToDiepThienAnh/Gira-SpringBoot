@@ -26,7 +26,7 @@ import cybersoft.backend.java11.gira.utils.DateUtils;
 public class AbstractEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@Column(updatable = false)
 	protected Long id;
 	
 	@Version

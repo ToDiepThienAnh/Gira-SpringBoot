@@ -1,46 +1,30 @@
 package cybersoft.backend.java11.gira.user.service;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import cybersoft.backend.java11.gira.commondata.GenericServiceImpl;
-import cybersoft.backend.java11.gira.user.dto.CreateUserDTO;
+import cybersoft.backend.java11.gira.user.dto.CreateUserDto;
 import cybersoft.backend.java11.gira.user.model.User;
 import cybersoft.backend.java11.gira.user.repository.UserRepository;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl extends GenericServiceImpl<User, Long> implements UserService {
-	
-	@Autowired
-	private UserRepository _repository;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private UserRepository repository;
 	
 	@Override
-	public User save(CreateUserDTO dto) {
+	public User save(CreateUserDto dto) {
 		// TODO Auto-generated method stub
-		System.out.println("Run in CreateUserDTO");
-		User user = new User().username(dto.getUsername())
-				.password(passwordEncoder.encode(dto.getPassword()))
-				.displayName(dto.getDisplayName())
-				.status(dto.getStatus())
-				.fullname(dto.getFullName())
-				.email(dto.getEmail());
-		return _repository.save(user);
+		User user = new User();
+		user.setUsername(dto.getUsername());
+		user.setPassword(dto.getPassword());
+		user.setFullName(dto.getFullName());
+		user.setEmail(dto.getEmail());
+		user.setStatus(dto.getStatus());
+		user.setDisplayName(dto.getDisplayName());
+		
+		return repository.save(user);
 	}
 
-	@Override
-	public boolean isTakenUsername(String username) {
-		// TODO Auto-generated method stub
-		return _repository.countByUsername(username) >= 1;
-	}
-
-	@Override
-	public boolean isTakenEmail(String email) {
-		// TODO Auto-generated method stub
-		return _repository.countByEmail(email) >= 1;
-	}
 }

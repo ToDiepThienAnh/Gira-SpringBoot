@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// make server stateless
 				http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 				// add jwt filter
-				http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+//				http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	@Bean

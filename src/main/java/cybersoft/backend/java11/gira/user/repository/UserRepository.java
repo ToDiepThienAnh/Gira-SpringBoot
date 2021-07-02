@@ -10,10 +10,6 @@ import cybersoft.backend.java11.gira.user.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	int countByUsername(String username);
-
 	Optional<User> findByUsername(String username);
-
-	int countByEmail(String email);
 
 }

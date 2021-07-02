@@ -8,14 +8,20 @@ import javax.persistence.Entity;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 
 import cybersoft.backend.java11.gira.commondata.AbstractEntity;
 import cybersoft.backend.java11.gira.user.model.User;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Table(name = "gira_role_group")
+@Getter
+@Setter
 public class RoleGroup extends AbstractEntity {
 	@NotBlank(message = "Role name can't be blank.")
 	@Length(min = 4, max = 50, message = "Role name length is between {0} and {1}.")

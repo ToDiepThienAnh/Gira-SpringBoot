@@ -1,5 +1,6 @@
 package cybersoft.backend.java11.gira.project.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cybersoft.backend.java11.gira.commondata.AbstractEntity;
 import lombok.Getter;
@@ -33,5 +36,6 @@ public class ProjectType extends AbstractEntity {
 	private String description;
 	
 	@OneToMany(mappedBy = "projectType", cascade = CascadeType.ALL)
-	private Set<Project> projects;
+	@JsonIgnore
+	private Set<Project> projects = new HashSet<Project>();
 }
